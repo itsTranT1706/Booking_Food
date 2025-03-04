@@ -1,58 +1,197 @@
-CREATE DATABASE BookingFood;
-GO
-USE BookingFood;
-GO
+CREATE DATABASE booking_food;
+
+use booking_food;
+
+CREATE TABLE Account(
+	AccountID BIGINT PRIMARY KEY AUTO_INCREMENT,
+	Name VARCHAR(255) NOT NULL,
+	Email VARCHAR(255) NOT NULL,
+	Phone VARCHAR(15),
+	RoleId BIGINT,
+	Password VARCHAR(255)
+	
+);
+
+CREATE TABLE Restaurant (
+	RestaurantID BIGINT PRIMARY KEY AUTO_INCREMENT,
+	RestaurantName VARCHAR(255) NOT NULL,
+	Address VARCHAR(255) NOT NULL,
+	Image VARCHAR(255),
+	Description VARCHAR (500),
+	Status BOOLEAN DEFAULT 0
+)
+
+CREATE TABLE Review (
+    ReviewID BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Rating INTEGER,
+    Comment VARCHAR(500),
+    Data DATE,
+    RestaurantID BIGINT,
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+);
+
+CREATE TABLE Menu (
+    MenuID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    RestaurantID INTEGER,
+    Description VARCHAR(500),
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+);
+
+CREATE TABLE CommonCategory (
+    CommonCategoryID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    CommonCategoryName VARCHAR(100),
+    Image VARCHAR(255)
+);
+
+CREATE TABLE MenuCategory (
+    MenuCategoryID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    MenuCategoryName VARCHAR(100),
+    MenuID INTEGER,
+    Image VARCHAR(255),
+    CommonCategoryID INTEGER,
+    FOREIGN KEY (MenuID) REFERENCES Menu(MenuID),
+    FOREIGN KEY (CommonCategoryID) REFERENCES CommonCategory(CommonCategoryID)
+);
+
+CREATE TABLE Food (
+    FoodID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    MenuCategoryID INTEGER,
+    FoodName VARCHAR(100),
+    Price INTEGER,
+    Image VARCHAR(255),
+    MenuExtraFoodID INTEGER,
+    FOREIGN KEY (MenuCategoryID) REFERENCES MenuCategory(MenuCategoryID),
+    FOREIGN KEY (MenuExtraFoodID) REFERENCES MenuExtraFood(MenuExtraFoodID)
+);
+
+CREATE TABLE MenuExtraFood (
+    MenuExtraFoodID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    MenuExtraFoodName VARCHAR(100),
+    Price INTEGER,
+    Image VARCHAR(255)
+);
+
+CREATE TABLE `Order` (
+    OrderID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    AccountID INTEGER,
+    RestaurantID INTEGER,
+    TotalCost INTEGER,
+    Time DATE,
+    OrderStatus BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (AccountID) REFERENCES Account(AccountID),
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+);
+
+CREATE TABLE OrderDetail (
+    OrderDetailID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    OrderID INTEGER,
+    FoodID INTEGER,
+    Quantity INTEGER,
+    TotalPrice INTEGER,
+    FOREIGN KEY (OrderID) REFERENCES `Order`(OrderID),
+    FOREIGN KEY (FoodID) REFERENCES Food(FoodID)
+);
+
+CREATE TABLE ExtraOrderDetail (
+    ExtraOrderDetailID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Quantity INTEGER,
+    TotalPrice INTEGER,
+    MenuExtraFoodID INTEGER,
+    OrderDetailID INTEGER,
+    FOREIGN KEY (MenuExtraFoodID) REFERENCES MenuExtraFood(MenuExtraFoodID),
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetail(OrderDetailID)
+);
+
+CREATE TABLE Coupon (
+    CouponID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    CouponName VARCHAR(100),
+    RestaurantID INTEGER,
+    Discount INTEGER,
+    Status BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (RestaurantID) REFERENCES Restaurant(RestaurantID)
+);
 
 
+INSERT INTO Account (Name, Email, Phone, RoleID, Password) VALUES
+('Nguyen Van A', 'a.nguyen@example.com', '0912345678', 1, 'pass123'),
+('Tran Thi B', 'b.tran@example.com', '0912345679', 2, 'pass124'),
+('Le Van C', 'c.le@example.com', '0912345680', 3, 'pass125'),
+('Pham Thi D', 'd.pham@example.com', '0912345681', 4, 'pass126'),
+('Hoang Van E', 'e.hoang@example.com', '0912345682', 5, 'pass127');
 
--- Thêm dữ liệu vào bảng Account
-INSERT INTO Account VALUES 
-('A001', 'John Doe', 'john@example.com', '0987654321', 1, 'pass123'),
-('A002', 'Alice Tran', 'alice@example.com', '0912345678', 2, 'alice@123'),
-('A003', 'Bob Smith', 'bob@example.com', '0933456789', 1, 'bobpass'),
-('A004', 'Charlie P', 'charlie@example.com', '0976543210', 3, 'charlie@'),
-('A005', 'David Kim', 'david@example.com', '0956789123', 2, 'david@321');
+INSERT INTO Restaurant (RestaurantName, Address, Image, Description, Status) VALUES
+('Nhà hàng A', '123 Đường A, TP.HCM', 'image1.jpg', 'Nhà hàng chuyên món Việt', TRUE),
+('Nhà hàng B', '456 Đường B, Hà Nội', 'image2.jpg', 'Nhà hàng châu Âu', TRUE),
+('Nhà hàng C', '789 Đường C, Đà Nẵng', 'image3.jpg', 'Nhà hàng hải sản', TRUE),
+('Nhà hàng D', '321 Đường D, Nha Trang', 'image4.jpg', 'Nhà hàng Nhật Bản', TRUE),
+('Nhà hàng E', '654 Đường E, Huế', 'image5.jpg', 'Nhà hàng Trung Hoa', TRUE);
 
--- Thêm dữ liệu vào bảng Restaurant
-INSERT INTO Restaurant VALUES 
-('R001', 'Pizza Hut', '123 Main St', 'img1.jpg', '0123456789', 'Famous for Italian Pizza', 1),
-('R002', 'KFC', '45 Street Ave', 'img2.jpg', '0234567891', 'Best Fried Chicken', 1),
-('R003', 'Sushi Bar', '78 Ocean Rd', 'img3.jpg', '0345678912', 'Fresh Sushi & Sashimi', 1),
-('R004', 'BBQ House', '99 BBQ Lane', 'img4.jpg', '0456789123', 'American-style BBQ', 1),
-('R005', 'Vegan Delight', '11 Green St', 'img5.jpg', '0567891234', '100% Plant-based meals', 1);
+INSERT INTO Review (Rating, Comment, Date, RestaurantID) VALUES
+(4, 'Rất ngon, phục vụ tốt!', '2024-12-01', 1),
+(5, 'Tuyệt vời, sẽ quay lại!', '2024-12-02', 2),
+(3, 'Bình thường, cần cải thiện', '2024-12-03', 3),
+(4, 'Thức ăn ngon, không gian đẹp', '2024-12-04', 4),
+(5, 'Dịch vụ xuất sắc!', '2024-12-05', 5);
 
--- Thêm dữ liệu vào bảng Menu
-INSERT INTO Menu VALUES 
-('M001', 'R001'), ('M002', 'R002'), ('M003', 'R003'), ('M004', 'R004'), ('M005', 'R005');
+INSERT INTO Menu (RestaurantID, Description) VALUES
+(1, 'Menu món Việt'),
+(2, 'Menu châu Âu'),
+(3, 'Menu hải sản'),
+(4, 'Menu Nhật Bản'),
+(5, 'Menu Trung Hoa');
 
--- Thêm dữ liệu vào bảng CommonCategory
-INSERT INTO CommonCategory VALUES 
-('CC001', 'Fast Food', 'cc1.jpg'),
-('CC002', 'Asian Cuisine', 'cc2.jpg'),
-('CC003', 'Vegan', 'cc3.jpg'),
-('CC004', 'BBQ', 'cc4.jpg'),
-('CC005', 'Desserts', 'cc5.jpg');
+INSERT INTO CommonCategory (CommonCategoryName, Image) VALUES
+('Món chính', 'main_dish.jpg'),
+('Món phụ', 'side_dish.jpg'),
+('Đồ uống', 'drinks.jpg'),
+('Tráng miệng', 'dessert.jpg'),
+('Salad', 'salad.jpg');
 
--- Thêm dữ liệu vào bảng Coupon
-INSERT INTO Coupon VALUES 
-('C001', 'DISCOUNT10', 'R001', 10, 1),
-('C002', 'SAVE20', 'R002', 20, 1),
-('C003', 'LUNCHDEAL', 'R003', 15, 1),
-('C004', 'BBQFEAST', 'R004', 25, 1),
-('C005', 'VEGANLOVE', 'R005', 10, 1);
+INSERT INTO MenuCategory (MenuCategoryName, MenuID, Image, CommonCategoryID) VALUES
+('Món chính Việt', 1, 'viet_main.jpg', 1),
+('Món phụ Âu', 2, 'eu_side.jpg', 2),
+('Hải sản', 3, 'seafood.jpg', 1),
+('Món Nhật', 4, 'japan_dish.jpg', 1),
+('Tráng miệng Trung', 5, 'china_dessert.jpg', 4);
 
--- Thêm dữ liệu vào bảng Order
-INSERT INTO [Order] VALUES 
-('O001', 'A001', 'R001', 'C001', 150, '2024-03-01', 1),
-('O002', 'A002', 'R002', 'C002', 180, '2024-03-02', 1),
-('O003', 'A003', 'R003', 'C003', 120, '2024-03-03', 0),
-('O004', 'A004', 'R004', 'C004', 250, '2024-03-04', 1),
-('O005', 'A005', 'R005', 'C005', 100, '2024-03-05', 1);
+INSERT INTO Food (MenuCategoryID, FoodName, Price, Image, MenuExtraFoodID) VALUES
+(1, 'Phở bò', 50000, 'pho.jpg', 1),
+(2, 'Salad rau', 30000, 'salad.jpg', 2),
+(3, 'Cua biển', 150000, 'crab.jpg', 3),
+(4, 'Sushi', 80000, 'sushi.jpg', 4),
+(5, 'Chè Trung Hoa', 40000, 'che.jpg', 5);
 
--- Thêm dữ liệu vào bảng Review
-INSERT INTO Review VALUES 
-('R001', 5, 'Excellent pizza!', '2024-03-01', 'A001', 'R001'),
-('R002', 4, 'Great chicken, crispy!', '2024-03-02', 'A002', 'R002'),
-('R003', 3, 'Sushi was okay.', '2024-03-03', 'A003', 'R003'),
-('R004', 5, 'Best BBQ in town!', '2024-03-04', 'A004', 'R004'),
-('R005', 4, 'Good vegan options.', '2024-03-05', 'A005', 'R005');
+INSERT INTO MenuExtraFood (MenuExtraFoodName, Price, Image) VALUES
+('Nước mắm', 5000, 'nuocmam.jpg'),
+('Dầu olive', 10000, 'olive.jpg'),
+('Sốt tỏi', 7000, 'sottoi.jpg'),
+('Wasabi', 6000, 'wasabi.jpg'),
+('Trà xanh', 8000, 'tea.jpg');
+
+INSERT INTO `Order` (AccountID, RestaurantID, TotalCost, Time, OrderStatus) VALUES
+(1, 1, 150000, '2025-03-01', TRUE),
+(2, 2, 120000, '2025-03-02', FALSE),
+(3, 3, 200000, '2025-03-03', TRUE),
+(4, 4, 180000, '2025-03-04', FALSE),
+(5, 5, 140000, '2025-03-05', TRUE);
+
+INSERT INTO OrderDetail (OrderID, FoodID, Quantity, TotalPrice) VALUES
+(1, 1, 2, 100000),
+(2, 2, 3, 90000),
+(3, 3, 1, 150000),
+(4, 4, 2, 160000),
+(5, 5, 3, 120000);
+
+INSERT INTO ExtraOrderDetail (Quantity, TotalPrice, MenuExtraFoodID, OrderDetailID) VALUES
+(1, 5000, 1, 1),
+(2, 20000, 2, 2),
+(1, 7000, 3, 3),
+(1, 6000, 4, 4),
+(2, 16000, 5, 5);
+
+INSERT INTO Coupon (CouponName, RestaurantID, Discount, Status) VALUES
+('Giảm 10%', 1, 10, TRUE),
+('Giảm 15%', 2, 15, TRUE),
+('Giảm 20%', 3, 20, TRUE),
+('Giảm 5%', 4, 5, TRUE),
+('Giảm 12%', 5, 12, TRUE);
