@@ -1,3 +1,10 @@
+CREATE DATABASE BookingFood;
+GO
+USE BookingFood;
+GO
+
+
+
 -- Thêm dữ liệu vào bảng Account
 INSERT INTO Account VALUES 
 ('A001', 'John Doe', 'john@example.com', '0987654321', 1, 'pass123'),
