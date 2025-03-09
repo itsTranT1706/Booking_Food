@@ -17,11 +17,12 @@ body {
     align-items: center;
     padding: 15px 40px;
     background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(168, 141, 141, 0.1);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    opacity: 0.85;
 }
 
 .logo {
@@ -114,7 +115,7 @@ body {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 10px;
     font-size: 1.1rem;
     transition: background-color 0.3s;
 }
@@ -133,6 +134,8 @@ body {
     font-size: 2.5rem;
     color: #00b14f;
     margin-bottom: 50px;
+    text-align: center  ;
+    
 }
 
 .food-grid {
@@ -432,6 +435,7 @@ footer {
 @media (max-width: 768px) {
     .navbar {
         padding: 15px 20px;
+        
     }
 
     .menu-toggle {
