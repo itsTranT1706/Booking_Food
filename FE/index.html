@@ -6,16 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Food</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 </head>
 
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="menu-toggle">
-            <div></div>
-            <div></div>
-            <div></div>
+            <a href="javascript:void(0);" class="icon" onclick="menuToggle()">
+                <i class="fa fa-bars"></i>
+            </a>        
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">Restaurants</a></li>
+            <li><a href="#">Partner with Us</a></li>
+            <li><a href="#">Help Center</a></li>
         </div>
+
         <div class="logo">FoodDelivery</div>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>
@@ -23,7 +31,13 @@
             <li><a href="#">Restaurants</a></li>
             <li><a href="#">Partner with Us</a></li>
             <li><a href="#">Help Center</a></li>
-            <!-- <li><a href="#">English</a></li> -->
+            <li>
+                <select id="translate">
+                    <option value="en">English</option>
+                    <option value="vn">Vietnamese</option>
+                </select>
+            
+            </li>
         </ul>
     </nav>
 
@@ -181,5 +195,5 @@
     </footer>
 
 </body>
-
+    <script src="main.js"></script>
 </html>
