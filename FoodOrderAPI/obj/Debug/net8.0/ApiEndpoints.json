@@ -1,0 +1,128 @@
+[
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.OrderController",
+    "Method": "GetAllRestaurantsWithFoodsGetOrderWithOrderDetailByAccountIDAndOrderStatus",
+    "RelativePath": "api/Order/orders-with-orderdetails",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "AccountID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderStatus",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "GetRestaurantList",
+    "RelativePath": "api/Restaurant",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "GetRestaurantListByCommonCategoryID",
+    "RelativePath": "api/Restaurant/{commoncategoryID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "commoncategoryID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "GetFoodListByRestaurantID",
+    "RelativePath": "api/Restaurant/{restaurantID}/foods",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "restaurantID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "GetRestaurantListByRestaurantNameOrFoodName",
+    "RelativePath": "api/Restaurant/{searchstring}/resultsearch",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "searchstring",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "GetAllRestaurantsWithFoods",
+    "RelativePath": "api/Restaurant/restaurants-with-foods",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.RestaurantController",
+    "Method": "UpdateFood",
+    "RelativePath": "api/Restaurant/update-food",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "food",
+        "Type": "Repositories.Dtos.Food",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodOrderAPI.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[FoodOrderAPI.WeatherForecast, FoodOrderAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]
